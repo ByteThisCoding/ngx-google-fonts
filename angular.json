@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "3b8a0648-c475-46c1-84c2-d90488817afa"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -97,6 +100,37 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "ngx-google-fonts-lib": {
+      "projectType": "library",
+      "root": "projects/ngx-google-fonts-lib",
+      "sourceRoot": "projects/ngx-google-fonts-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-google-fonts-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-google-fonts-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-google-fonts-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-google-fonts-lib/src/test.ts",
+            "tsConfig": "projects/ngx-google-fonts-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-google-fonts-lib/karma.conf.js"
           }
         }
       }

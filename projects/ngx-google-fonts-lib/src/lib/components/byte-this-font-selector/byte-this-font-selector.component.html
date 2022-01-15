@@ -1,0 +1,26 @@
+<ng-container *ngIf="(googleApiFontsIterable$ | async) as fonts else Loading">
+
+    <input type="search"
+        id="font-input"
+        [style.font-family]="value$ | async"
+        [value]="prefixInput$ | async"
+        (input)="onUserPrefixInput($event)"
+        (change)="onUserPrefixInput($event)"
+        (click)="openOverlay()"
+    />
+
+    <!-- Overlay for font selection -->
+    <div id="overlay" *ngIf="showOverlay$ | async">
+        <byte-this-google-font-preview
+            class="font-entry"
+            *ngFor="let font of fonts"
+            [font-family]="font.data!.family"
+            (click)="onOverlayFontClick(font.data!.family)"
+        ></byte-this-google-font-preview>
+    </div>
+    
+
+</ng-container>
+<ng-template #Loading>
+    Loading fonts...
+</ng-template>

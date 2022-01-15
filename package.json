@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publish:npm": "node build-cli.js publish-lib ngx-google-fonts-lib"
   },
   "private": true,
   "dependencies": {
@@ -18,8 +19,11 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@byte-this/collections": "^1.0.47",
+    "@byte-this/funscript": "^1.0.22",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
+    "webfontloader": "^1.6.28",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -28,12 +32,14 @@
     "@angular/compiler-cli": "~13.1.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "@types/webfontloader": "^1.6.34",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^13.0.0",
     "typescript": "~4.5.2"
   }
 }

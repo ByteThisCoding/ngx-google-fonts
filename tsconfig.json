@@ -11,6 +11,12 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "paths": {
+      "ngx-google-fonts-lib": [
+        "dist/ngx-google-fonts-lib/ngx-google-fonts-lib",
+        "dist/ngx-google-fonts-lib"
+      ]
+    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,

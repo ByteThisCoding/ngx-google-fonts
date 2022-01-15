@@ -1,0 +1,33 @@
+#font-input {
+    position: relative;
+    font-size: var(--input-font-size, 1.1em);
+    padding: var(--input-padding, 0.25em);
+    width: var(--input-width, 250px);
+    cursor: pointer;
+}
+
+#overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--selection-background-color, white);
+
+    height: var(--selection-height, 40vh);
+    width: var(--selection-width, var(--input-width, 400px));
+
+    z-index: var(--selection-z-index, 1000);
+    border: 2px solid var(--selection-border-color, black);
+    overflow: auto;
+}
+
+.font-entry {
+    cursor: pointer;
+    border-bottom: 1px solid var(--selection-border-color, black);
+    padding: var(--selection-padding, 0.75em);
+    font-size: var(--selection-font-size, 1.75em);
+}
+
+.font-entry:hover {
+    background-color: var(--selection-background-color, lightgray);
+}
