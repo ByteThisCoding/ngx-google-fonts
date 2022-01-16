@@ -63,6 +63,20 @@ function buildLib(libName) {
         console.error(`Error copying package.json!`, err);
         return 1;
     }
+
+    console.log(`Copying readme.md.`);
+    try {
+        const readmeMdFileSource = `${__dirname}\\readme.md`;
+        const readmeMdFileTarget = `${__dirname}\\projects\\${libName}\\readme.md`;
+        let readmeMdStr = fs.readFileSync(readmeMdFileSource, {
+            encoding: 'utf-8'
+        });
+        fs.writeFileSync(readmeMdFileTarget, readmeMdStr);
+
+    } catch (err) {
+        console.error(`Error copying readme.md!`, err);
+        return 1;
+    }
     return 0;
 }
 
@@ -128,5 +142,20 @@ function publishLib(libName) {
         console.error(`Error publishing, check output above!`);
         return 1;
     }
+
+    console.log(`Copying readme.md.`);
+    try {
+        const readmeMdFileSource = `${__dirname}\\readme.md`;
+        const readmeMdFileTarget = `${__dirname}\\dist\\${libName}\\readme.md`;
+        let readmeMdStr = fs.readFileSync(readmeMdFileSource, {
+            encoding: 'utf-8'
+        });
+        fs.writeFileSync(readmeMdFileTarget, readmeMdStr);
+
+    } catch (err) {
+        console.error(`Error copying readme.md!`, err);
+        return 1;
+    }
+
     return 0;
 }

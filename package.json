@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node build-cli.js build-lib ngx-google-fonts-lib",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "publish:npm": "node build-cli.js publish-lib ngx-google-fonts-lib"
