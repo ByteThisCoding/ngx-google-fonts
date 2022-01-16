@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    color: #32322c;
+    font-family: Consolas, 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0;
+}

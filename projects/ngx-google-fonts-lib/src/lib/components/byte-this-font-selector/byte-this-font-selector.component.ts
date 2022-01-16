@@ -23,7 +23,11 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
     @Input('value') value: string | null = null;
     value$ = new BehaviorSubject<string | null>(null);
 
+    @Output('hover-value') hoverValue = new EventEmitter<iGoogleFont | null>();
+
     @Output('change') change = new EventEmitter<iGoogleFont>();
+
+    @Output('error') error = new EventEmitter<any>();
 
     showOverlay$ = new BehaviorSubject(false);
 
@@ -45,7 +49,10 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
             ]).pipe(filter(([prefix, apiKey]) => !!apiKey))
                 .subscribe(async ([prefix]) => {
                     this.googleApiFontsIterable$.next(
-                        await this.googleFontService.getFontsIterable(prefix!)
+                        await this.googleFontService.getFontsIterable(prefix!).catch(err => {
+                            this.error.emit(err);
+                            throw err;
+                        })
                     );
                 })
         );
@@ -58,6 +65,18 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
                 }
             })
         );
+
+        //when value is updated and api key is available, load font
+        this.subs.push(
+            combineLatest([
+                this.value$,
+                this.googleApiKey$
+            ]).pipe(
+                filter(([value, apiKey]) => !!apiKey)
+            ).subscribe(([value]) => {
+                this.googleFontService.tryLoadFont(value!);
+            })
+        )
 
         //if user clicks outside element, close the overlay
         this.renderer.listen('window', 'click', (e: Event) => {
@@ -85,15 +104,35 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
         this.change.emit(font!);
     }
 
+    /**
+     * If a preview component has an error, forward it to the consumer
+     */
+    onPreviewError(event: any): void {
+        this.error.emit(event);
+    }
+
     openOverlay(): void {
         this.prefixInput$.next("");
         this.showOverlay$.next(true);
-    }
 
-    toggleOverlayOpen(): void {
-        this.showOverlay$.next(
-            !this.showOverlay$.value
-        );
+        //scroll to selected font
+        if (this.value$.value) {
+            //set timeout so element can render first
+            setTimeout(() => {
+                const overlay = this.elementRef.nativeElement.querySelector("#overlay");
+                const selectedItem = overlay?.querySelector(".font-entry-selected");
+                if (selectedItem) {
+                    const ovPos = overlay.getBoundingClientRect();
+                    const itPos = selectedItem.getBoundingClientRect();
+
+                    const pos = overlay.scrollTop
+                        + (itPos.top - ovPos.top)
+                        - ((ovPos.bottom - ovPos.top)/2) + ((itPos.bottom - itPos.top)/2);
+
+                    overlay.scrollTo(0, pos);
+                }
+            }, 10);
+        }
     }
 
     closeOverlay(): void {
@@ -101,7 +140,17 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
         this.prefixInput$.next(
             this.value$.value!
         );
+        this.hoverValue.next(null);
     }
+
+    previewMouseEnter(font: iGoogleFont): void {
+        this.hoverValue.next(font);
+    }
+
+    previewMouseLeave(): void {
+        this.hoverValue.next(null);
+    }
+
 
     onUserPrefixInput(event: Event): void {
         event.stopPropagation();

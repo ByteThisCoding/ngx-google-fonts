@@ -13,7 +13,8 @@ export class AppComponent {
   tentativeApiKey$ = new BehaviorSubject("");
   apiKey$ = new BehaviorSubject<string | null>(null);
 
-  selectedFont$ = new BehaviorSubject("");
+  selectedFont$ = new BehaviorSubject("<none>");
+  hoverFont$ = new BehaviorSubject("<none>");
 
   onApiKeyChange(event: Event): void {
     const value = (event.target as any).value;
@@ -29,4 +30,7 @@ export class AppComponent {
     this.selectedFont$.next(event.family);
   }
 
+  onFontHover(font: iGoogleFont | null): void {
+    this.hoverFont$.next(font ? font.family : "<none>");
+  }
 }

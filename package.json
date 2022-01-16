@@ -9,7 +9,10 @@
     "test": "ng test",
     "publish:npm": "node build-cli.js publish-lib ngx-google-fonts-lib"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ByteThisStore/ngx-google-fonts"
+  },
   "dependencies": {
     "@angular/animations": "~13.1.0",
     "@angular/common": "~13.1.0",

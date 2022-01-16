@@ -1,9 +1,14 @@
-#font-input {
+:host {
+    display :block;
     position: relative;
+}
+
+#font-input {
     font-size: var(--input-font-size, 1.1em);
     padding: var(--input-padding, 0.25em);
-    width: var(--input-width, 250px);
+    width: 100%;
     cursor: pointer;
+    text-align: var(--input-text-align, center);
 }
 
 #overlay {
@@ -14,7 +19,7 @@
     background-color: var(--selection-background-color, white);
 
     height: var(--selection-height, 40vh);
-    width: var(--selection-width, var(--input-width, 400px));
+    width: var(--selection-width, 100%);
 
     z-index: var(--selection-z-index, 1000);
     border: 2px solid var(--selection-border-color, black);
@@ -29,5 +34,9 @@
 }
 
 .font-entry:hover {
-    background-color: var(--selection-background-color, lightgray);
+    background-color: var(--selection-background-color-hover, lightgray);
+}
+
+.font-entry-selected {
+    background-color: var(--selection-background-color-selected, lightgray);
 }

@@ -27,17 +27,16 @@ export class ByteThisFontPreviewComponent implements OnInit, OnDestroy {
         private googleFontService: GoogleFontService
     ) { }
 
+    /**
+     * Setup an Intersection Observer so we can lazy-load the font when needed
+     */
     ngOnInit(): void {
         const observer = new IntersectionObserver((entries, self) => {
             // iterate over each entry
             entries.forEach(entry => {
-                // process just the images that are intersecting.
-                // isIntersecting is a property exposed by the interface
                 if (entry.isIntersecting) {
-                    // custom function that copies the path to the img
-                    // from data-src to src
                     this.renderFont();
-                    // the image is now in place, stop watching
+                    //we can unobserve, only need to load the font once
                     self.unobserve(entry.target);
                 }
             });

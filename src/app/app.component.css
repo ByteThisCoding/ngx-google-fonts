@@ -1,0 +1,30 @@
+h1 {
+    text-align: center;
+    font-size: 3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    background-color: #b0efea;
+}
+
+content  {
+    display: block;
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+label {
+    font-weight: bold;
+}
+
+input, button {
+    font-size: 1.1em;
+    width: 300px;
+    box-sizing: border-box;
+}
+
+byte-this-google-font-selector-input {
+    width: 50%;
+    --input-font-size: 1.5em;
+}
