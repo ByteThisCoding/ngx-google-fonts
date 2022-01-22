@@ -119,18 +119,7 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
         if (this.value$.value) {
             //set timeout so element can render first
             setTimeout(() => {
-                const overlay = this.elementRef.nativeElement.querySelector("#overlay");
-                const selectedItem = overlay?.querySelector(".font-entry-selected");
-                if (selectedItem) {
-                    const ovPos = overlay.getBoundingClientRect();
-                    const itPos = selectedItem.getBoundingClientRect();
-
-                    const pos = overlay.scrollTop
-                        + (itPos.top - ovPos.top)
-                        - ((ovPos.bottom - ovPos.top)/2) + ((itPos.bottom - itPos.top)/2);
-
-                    overlay.scrollTo(0, pos);
-                }
+                this.scrollToSelectedValue();
             }, 10);
         }
     }
@@ -158,11 +147,33 @@ export class ByteThisFontSelectorComponent implements OnInit, OnChanges, OnDestr
         if (value !== this.prefixInput$) {
             this.prefixInput$.next(value);
         }
+
+        //set scroll back to the top to show first filtered item
+        const overlay = this.elementRef.nativeElement.querySelector("#overlay");
+        overlay.scrollTo(0, 0);
     }
 
     ngOnDestroy(): void {
         this.subs.forEach(sub => sub.unsubscribe());
         this.subs = [];
+    }
+
+    /**
+     * Scroll to the selected value, if there is one
+     */
+    private scrollToSelectedValue(): void {
+        const overlay = this.elementRef.nativeElement.querySelector("#overlay");
+        const selectedItem = overlay?.querySelector(".font-entry-selected");
+        if (selectedItem) {
+            const ovPos = overlay.getBoundingClientRect();
+            const itPos = selectedItem.getBoundingClientRect();
+
+            const pos = overlay.scrollTop
+                + (itPos.top - ovPos.top)
+                - ((ovPos.bottom - ovPos.top)/2) + ((itPos.bottom - itPos.top)/2);
+
+            overlay.scrollTo(0, pos);
+        }
     }
 
 }
